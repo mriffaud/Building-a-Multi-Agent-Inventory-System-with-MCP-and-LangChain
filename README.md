@@ -37,28 +37,103 @@ In our inventory system:
 This combination allows users to manage inventory conversationally while ensuring data consistency across systems. All of this without writing custom APIs for each integration!
 
 ## Deep Dive into Components
-Break down each script in its own subsection:
+Now that we understand MCP servers and how they can be useful, let’s roll up our sleeves and look at the actual building blocks of our inventory system. It consists of five Python scripts, each playing a distinct role in orchestrating inventory management through natural language commands:
+* Two scripts (`store_server.py` and `warehouse_server.py`) act as MCP servers, exposing tools for basket and stock operations.
+* Two scripts (`store_client.py` and `warehouse_client.py`) serve as interactive clients, allowing users to manage these systems conversationally.
+* Finally, `mcp_client.py` acts as the orchestrator, bridging the store and warehouse to maintain data consistency.
 
-### Store Server (store_server.py)
-Purpose: basket management.
-Tools exposed: add_item, get_items, remove_item.
-Code snippet for tool registration.
+In this section, we’ll break down each component, explain its responsibilities, and show how they work together to create a seamless, AI-driven workflow. From tool registration to LangChain-powered reasoning, you’ll see how these pieces fit into the bigger picture.
 
-### Store Client (store_client.py)
+### Store Server
+The store server is the backbone of basket management in our system. It runs as an MCP server using FastMCP, exposing a set of tools that allow clients to add, view, and remove items from the basket. This design ensures that basket operations are modular and accessible via natural language commands through the MCP protocol.
+
+#### Purpose
+The store server maintains a simple in-memory dictionary called `mcp_basket` to track items and their quantities. By exposing this functionality as MCP tools, any MCP-compatible client can interact with the basket without worrying about implementation details.
+
+#### Code Snippet for Tool Registration
+Here’s how the server registers these tools using **FastMCP**:
+```python
+from fastmcp import FastMCP
+
+# Initialise MCP server
+mcp = FastMCP("MCP_STORE")
+
+# Basket to store items
+mcp_basket = {}
+
+@mcp.tool()
+def add_item(key: str, quantity: int) -> str:
+    """Add an item to the basket with specified quantity"""
+    mcp_basket[key] = quantity
+    return f"Added {key} with quantity: {quantity}"
+
+@mcp.tool()
+def get_items() -> dict:
+    """Get all items from the basket"""
+    return {"items": mcp_basket}
+
+@mcp.tool()
+def remove_item(key: str) -> str:
+    """Remove an item from the basket"""
+    if key in mcp_basket:
+        value = mcp_basket.pop(key)
+        return f"Removed {key}: {value}"
+    return f"Key {key} not found"
+
+if __name__ == "__main__":
+    mcp.run(transport="streamable-http", host="127.0.0.1", port=8001)
+```
+
+#### How It Works:
+The store server operates as a lightweight MCP service that exposes basket management functionality through a standardised protocol. Here’s the step-by-step breakdown:
+
+**Initialisation**
+```python
+mcp = FastMCP("MCP_STORE")
+```
+* This creates an MCP server instance named `MCP_STORE`.
+* FastMCP handles all the boilerplate for registering tools and serving them over HTTP using the MCP specification.
+
+**Basket State**
+```python
+mcp_basket = {}
+```
+* The basket is represented as a simple Python dictionary.
+* Keys are item names and values are quantities.
+* This in-memory structure makes operations fast and straightforward.
+
+**Tool Registration**
+
+Each function decorated with `@mcp.tool()` becomes an MCP tool:
+* `add_item`: Updates the dictionary with the item and quantity.
+* `get_items`: Returns the entire basket as a JSON-friendly dictionary.
+* `remove_item`: Deletes the item if it exists, returning a confirmation message.
+These tools are automatically exposed to any MCP client that connects to this server.
+
+**Integration with LangChain**
+
+* LangChain agents discover these tools dynamically via the MCP client.
+* When a user types:  
+    *“Add an item apple of quantity 3 to the basket”*,  
+    the agent interprets the intent and calls `add_item` on the MCP server.
+* This decouples natural language understanding from business logic, ensuring modularity.
+
+
+### Store Client
 Purpose: interactive CLI for basket operations.
 How it uses LangChain + Azure GPT-5 Nano.
 Example command and agent behaviour.
 
-### Warehouse Server (warehouse_server.py)
+### Warehouse Server
 Purpose: stock management.
 Tools: get_products, check_product, update_quantity, etc.
 Code snippet for adding/removing products.
 
-### Warehouse Client (warehouse_client.py)
+### Warehouse Client
 Similar to store client but for warehouse.
 Example workflow.
 
-### MCP Client (mcp_client.py)
+### The Orchestrator: MCP Client
 The orchestrator.
 How it validates stock before adding to basket.
 Helper functions like extract_quantity.
