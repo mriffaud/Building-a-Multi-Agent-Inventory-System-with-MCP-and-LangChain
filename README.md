@@ -60,8 +60,8 @@ Now that we understand MCP servers and how they can be useful, let’s roll up o
 
 In this section, we’ll break down each component, explain its responsibilities, and show how they work together to create a seamless, AI-driven workflow. From tool registration to LangChain-powered reasoning, you’ll see how these pieces fit into the bigger picture.
 
-
-### Store Server <a name="StoreServer"></a>
+<a name="StoreServer"></a>
+### Store Server
 The store server is the backbone of basket management in our system. It runs as an MCP server using FastMCP, exposing a set of tools that allow clients to add, view, and remove items from the basket. This design ensures that basket operations are modular and accessible via natural language commands through the MCP protocol.
 
 #### Purpose
@@ -93,7 +93,8 @@ Each function decorated with `@mcp.tool()` becomes an MCP tool:
 * `remove_item`: Deletes the item if it exists, returning a confirmation message.
 These tools are automatically exposed to any MCP client that connects to this server.
 
-### Store Server <a name="StoreServer"></a>
+<a name="StoreServer"></a>
+### Store Server 
 The store server is the backbone of basket management in our system. It runs as an MCP server using FastMCP, exposing a set of tools that allow clients to add, view, and remove items from the basket. This design ensures that basket operations are modular and accessible via natural language commands through the MCP protocol.
 
 #### Purpose
@@ -125,7 +126,8 @@ Each function decorated with `@mcp.tool()` becomes an MCP tool:
 * `remove_item`: Deletes the item if it exists, returning a confirmation message.
 These tools are automatically exposed to any MCP client that connects to this server.
 
-### Store Client <a name="StoreClient"></a>
+<a name="StoreClient"></a>
+### Store Client 
 The store client is an interactive command-line interface that connects to the MCP store server and allows users to manage their basket through a structured prompt sequence.
 
 #### Purpose
@@ -160,7 +162,8 @@ Behind the scenes:
 *   Sends a request to the MCP server.
 *   Receives and prints the confirmation message.
 
-### Warehouse Server <a name="WarehouseServer"></a>
+<a name="WarehouseServer"></a>
+### Warehouse Server 
 The warehouse server plays a role very similar to the store server, but instead of managing a basket, it manages the entire stock inventory. Like the store server, it runs as an MCP server using FastMCP, and exposes its functionality through MCP tools so that clients can interact with it in a structured, protocol-driven way.
 
 #### Purpose
@@ -200,7 +203,8 @@ The concept is the same as for the store server—functions decorated with `@mcp
 
 These tools are automatically exposed to any MCP client, just like the basket tools.
 
-### Warehouse Client <a name="WarehouseClient"></a>
+<a name="WarehouseClient"></a
+### Warehouse Client
 
 The warehouse client serves the same fundamental purpose as the store client—providing an interactive interface for managing operations—but its focus is on stock control rather than basket management. Like the store client, it connects to an MCP server, uses LangChain to wrap MCP tools into an agent, and relies on Azure GPT-5 Nano for orchestrating tool calls. However, the workflow and actions are tailored to inventory tasks.
 
@@ -245,7 +249,8 @@ Behind the scenes:
 
 The warehouse client follows the same design principles as the store client but its domain is inventory management rather than basket operations.
 
-### The Orchestrator: MCP Client <a name="Orchestrator"></a>
+<a name="Orchestrator"></a>
+### The Orchestrator: MCP Client 
 
 The orchestrator is where everything comes together. While the store and warehouse clients operate independently, the orchestrator coordinates both systems to maintain consistency between basket and stock. Its design follows the same principles as the previous clients: structured prompts, LangChain agent, and MCP integration—but introduces additional logic for validation and synchronisation.
 
