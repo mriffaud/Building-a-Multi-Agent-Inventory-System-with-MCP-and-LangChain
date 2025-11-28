@@ -19,8 +19,9 @@ By the end, you’ll understand how these components interact to form a distribu
     3. [Warehouse Server](#WarehouseServer)
     4. [Warehouse Client](#WarehouseClient)
     5. [The Orchestrator](#Orchestrator)
-3. [Another paragraph](#paragraph2)
-4. [Another paragraph](#paragraph2)
+3. [Future Enhancements](#FutureEnhancements)
+4. [Conclusion](#Conclusion)
+5. [Ressources](#Ressources)
 
 ---
 <a name="MCP"></a>
@@ -203,7 +204,7 @@ The concept is the same as for the store server—functions decorated with `@mcp
 
 These tools are automatically exposed to any MCP client, just like the basket tools.
 
-<a name="WarehouseClient"></a
+<a name="WarehouseClient"></a>
 ### Warehouse Client
 
 The warehouse client serves the same fundamental purpose as the store client—providing an interactive interface for managing operations—but its focus is on stock control rather than basket management. Like the store client, it connects to an MCP server, uses LangChain to wrap MCP tools into an agent, and relies on Azure GPT-5 Nano for orchestrating tool calls. However, the workflow and actions are tailored to inventory tasks.
@@ -274,7 +275,6 @@ Where it differs:
 * Validation Logic: Before adding to the basket, the orchestrator checks warehouse stock using `check_product`. If insufficient, it alerts the user.
 * Stock Update: After a successful basket addition, it decrements warehouse stock. Similarly, when removing from the basket, it restores stock in the warehouse.
 
-
 #### Helper Functions:
 To support this logic, the orchestrator uses small utility functions:
 * `extract_quantity(text)`: Parses numeric quantities from AI responses:
@@ -308,6 +308,7 @@ Behind the scenes:
 5.  Prints confirmation messages for each step.
 
 The orchestrator combines the structured prompt model of the previous clients with additional business logic for validation and synchronisation. It ensures that basket operations and warehouse inventory remain in sync.
+
 
 ## Why This Architecture Works?
 
@@ -345,15 +346,21 @@ Because the architecture is protocol-driven and modular:
 
 This architecture works because it combines clarity, consistency and composability, all under a standard protocol that plays well with AI orchestration. It’s simple enough for local deployments yet robust enough to scale into business workflows.
 
+---
+<a name="FutureEnhancements"></a>
 ## Future Enhancements
 Persistent storage.
 Authentication.
 Better quantity parsing (e.g., “ten” vs “10”).
 
+---
+<a name="Conclusion"></a>
 ## Conclusion
 Recap benefits.
 Encourage experimentation with MCP + LangChain.
 
+---
+<a name="Ressources"></a>
 ## Ressources
 - https://medium.com/@anoopninangeorge/building-a-remote-mcp-server-a-mcp-client-with-fastmcp-langchain-langgraph-17cf0e8d043b
 - https://modelcontextprotocol.io/docs/getting-started/intro
