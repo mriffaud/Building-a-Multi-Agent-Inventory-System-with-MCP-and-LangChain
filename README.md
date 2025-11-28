@@ -311,9 +311,7 @@ The orchestrator combines the structured prompt model of the previous clients wi
 
 #### Watch It in Action
 Here’s a quick demo of the multi-agent system adding and removing items from the basket while updating warehouse inventory in real time:
-<p align="center" width="100%">
-<video src="docs/Demo.gif" width="80%" controls></video>
-</p>
+![demo](./docs/Demo.gif)
 
 ## Why This Architecture Works?
 
