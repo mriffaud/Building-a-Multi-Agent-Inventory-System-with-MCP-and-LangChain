@@ -352,27 +352,59 @@ This architecture works because it combines clarity, consistency and composabili
 ---
 <a name="FutureEnhancements"></a>
 ## Future Enhancements
-Persistent storage.
-Authentication.
-Better quantity parsing (e.g., “ten” vs “10”).
+While the current implementation demonstrates a functional multi-agent inventory system, there are several opportunities to extend and refine it. These enhancements are not mandatory but serve as starting points for readers who want to build on this foundation.
+
+* **Delegate Basket Operations to Orchestrator**  
+    Simplify `store_client.py` by routing add/remove logic through `mcp_client.py` to avoid duplication and reduce maintenance overhead.
+
+* **Chatbot Interface**  
+    Replace structured prompts with a conversational interface that interprets natural language commands for a more intuitive user experience.
+
+* **Authentication and Access Control**  
+    Secure MCP servers with API keys or OAuth and implement role-based permissions to prevent unauthorised access.
+
+* **Enhanced Quantity Parsing**  
+    Improve helper functions to handle words like `ten` or phrases like `half a dozen` and validate against invalid quantities.
+
+* **Error Handling**  
+    Add robust error handling for invalid tool calls.
+
+* **Observability and Logging**  
+    Implement structured logging and monitoring to track tool calls, inventory changes, and system performance.
 
 ---
 <a name="Conclusion"></a>
 ## Conclusion
-Recap benefits.
-Encourage experimentation with MCP + LangChain.
+
+This project illustrates how MCP combined with LangChain and FastMCP can turn a simple inventory workflow into a modular, AI-assisted system. By splitting responsibilities across MCP servers for the store and warehouse and coordinating them through an orchestrator, we achieve:
+* Modularity: Each component focuses on a single responsibility, making the system easier to maintain and extend.
+* Standardisation: MCP provides a consistent protocol for exposing tools and handling communication, eliminating the need for custom APIs.
+* Structured Interaction with AI Orchestration: Guided prompts ensure reliability, while LangChain agents handle tool invocation.
+* Data Consistency: The orchestrator enforces business rules, preventing overselling and keeping inventory accurate.
+
+**Your Next Step:** Experiment and extend. Whether you want to add persistent storage, build a chatbot like interface, or containerise the system for deployment, MCP + LangChain + FastMCP gives you the foundation to do it. The scripts in this article can be a starting point so pick them up, adapt them, and create your own intelligent, multi-agent workflows!
 
 ---
 <a name="Ressources"></a>
 ## Ressources
-- https://medium.com/@anoopninangeorge/building-a-remote-mcp-server-a-mcp-client-with-fastmcp-langchain-langgraph-17cf0e8d043b
-- https://modelcontextprotocol.io/docs/getting-started/intro
-- https://modelcontextprotocol.io/docs/learn/architecture
-- https://modelcontextprotocol.io/docs/learn/server-concepts
-- https://modelcontextprotocol.io/docs/learn/client-concepts
-- https://gofastmcp.com/getting-started/welcome
-- https://gofastmcp.com/servers/server
+Here are the key references and materials that informed and supported this project:
 
+* **Starting Point for Scripts**  
+    [Building a Remote MCP Server and Client with FastMCP, LangChain, and LangGraph](https://medium.com/@anoopninangeorge/building-a-remote-mcp-server-a-mcp-client-with-fastmcp-langchain-langgraph-17cf0e8d043b)
+
+  This Medium article served as the foundation for the scripts in this project. I reused and extended the concepts demonstrated there to build a multi-agent architecture with additional orchestration logic.
+
+* **Model Context Protocol Documentation**
+    *   [Getting Started](https://modelcontextprotocol.io/docs/getting-started/intro)
+    *   [Architecture Overview](https://modelcontextprotocol.io/docs/learn/architecture)
+    *   [Server Concepts](https://modelcontextprotocol.io/docs/learn/server-concepts)
+    *   [Client Concepts](https://modelcontextprotocol.io/docs/learn/client-concepts)
+
+* **FastMCP Documentation**
+    *   <https://gofastmcp.com/getting-started/welcome>
+    *   <https://gofastmcp.com/servers/server>
+
+These resources provide deeper insights into MCP fundamentals, FastMCP implementation details, and best practices for building AI-integrated systems. They are highly recommended for anyone looking to extend or customise the architecture presented in this article.
 
 
 
