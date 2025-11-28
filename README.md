@@ -309,6 +309,9 @@ Behind the scenes:
 
 The orchestrator combines the structured prompt model of the previous clients with additional business logic for validation and synchronisation. It ensures that basket operations and warehouse inventory remain in sync.
 
+#### Watch It in Action
+Here’s a quick demo of the multi-agent system adding and removing items from the basket while updating warehouse inventory in real time:
+
 
 ## Why This Architecture Works?
 
