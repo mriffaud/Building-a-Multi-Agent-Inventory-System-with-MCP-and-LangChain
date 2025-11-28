@@ -13,15 +13,16 @@ By the end, you’ll understand how these components interact to form a distribu
 ---
 ## Table of Content
 1. [What is MCP and Why Use It?](#MCP)
-2. [Deep Dive into Components](#Components)
+2. [Prerequisites](#Prerequisites)
+3. [Deep Dive into Components](#Components)
     1. [Store Server](#StoreServer)
     2. [Store Client](#StoreClient)
     3. [Warehouse Server](#WarehouseServer)
     4. [Warehouse Client](#WarehouseClient)
     5. [The Orchestrator](#Orchestrator)
-3. [Future Enhancements](#FutureEnhancements)
-4. [Conclusion](#Conclusion)
-5. [Ressources](#Ressources)
+4. [Future Enhancements](#FutureEnhancements)
+5. [Conclusion](#Conclusion)
+6. [Ressources](#Ressources)
 
 ---
 <a name="MCP"></a>
@@ -50,6 +51,11 @@ In our inventory system:
 * `LangChain` agents act as the host, interpreting natural language and invoking MCP tools.
 * `Azure OpenAI` provides the LLM backbone for reasoning and orchestration.
 This combination allows users to manage inventory conversationally while ensuring data consistency across systems. All of this without writing custom APIs for each integration!
+
+---
+<a name="Prerequisites"></a>
+## Prerequisites
+Before you begin, ensure you have the necessary infrastructure and tools in place. These scripts rely on a Large Language Model (LLM) deployed via Azure OpenAI Service, so you’ll need an active Azure subscription, a provisioned resource, and access credentials (API key and endpoint URL). 
 
 ---
 <a name="Components"></a>
