@@ -1,6 +1,6 @@
 # Building a Multi-Agent Inventory System with MCP and LangChain
 
-Managing inventory across multiple systems—like a store and a warehouse—can quickly become complex. In this article, we’ll explore a practical implementation using LangChain, Azure OpenAI, and FastMCP to create a multi-agent architecture that handles basket operations and warehouse stock synchronisation.
+Managing inventory across multiple systems can quickly become complex. In this article, we’ll explore a practical implementation using LangChain, Azure OpenAI, and FastMCP to create a multi-agent architecture that handles basket operations and warehouse stock synchronisation.
 We’ll break down five Python scripts:
 * `store_server.py`
 * `store_client.py`
