@@ -319,42 +319,6 @@ The orchestrator combines the structured prompt model of the previous clients wi
 Here’s a quick demo of the multi-agent system adding and removing items from the basket while updating warehouse inventory in real time:
 ![demo](./docs/Demo.gif)
 
-## Why This Architecture Works?
-
-This architecture succeeds because it combines clear separation of concerns, protocol-driven interoperability, and structured user interaction with AI-powered orchestration. Here’s why it’s effective:
-
-#### Modular Design
-Each component has a single responsibility:
-* Store Server manages basket operations.
-* Warehouse Server manages stock.
-* Clients provide user interfaces.
-* Orchestrator enforces business rules and synchronisation.
-This modularity makes the system easy to maintain, extend, and scale. Adding a new domain (e.g., shipping) would simply mean creating another MCP server and updating the orchestrator.
-
-#### Standardised Communication via MCP
-By using Model Context Protocol, all servers expose their functionality through a consistent interface. This eliminates the need for custom APIs and hardcoded integrations.
-
-#### Structured Interaction
-Instead of relying on ambiguous natural language, the system uses guided prompts for user input. This reduces errors, simplifies validation, and makes the workflow deterministic.
-
-#### AI-Powered Orchestration
-LangChain agents and Azure GPT-5 Nano provide reasoning capabilities without taking over the entire workflow. The LLM doesn’t guess user intent; it focuses on mapping structured queries to MCP tools and coordinating multi-step processes. This balance ensures reliability while leveraging AI for orchestration.
-
-#### Data Consistency
-The orchestrator enforces business logic:
-* Validates stock before adding to the basket.
-* Updates warehouse quantities after basket changes.
-
-This prevents overselling and keeps both systems in sync—something that standalone clients cannot guarantee.
-
-#### Scalability and Extensibility
-Because the architecture is protocol-driven and modular:
-* You can add new tools to servers without changing client logic.
-* You can integrate additional MCP servers into the orchestrator with minimal effort.
-* Persistent storage or authentication can be layered in without breaking the core design.
-
-This architecture works because it combines clarity, consistency and composability, all under a standard protocol that plays well with AI orchestration. It’s simple enough for local deployments yet robust enough to scale into business workflows.
-
 ---
 <a name="FutureEnhancements"></a>
 ## Future Enhancements
